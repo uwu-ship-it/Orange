@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Värd: 127.0.0.1
--- Tid vid skapande: 28 mars 2022 kl 14:11
+-- Tid vid skapande: 01 apr 2022 kl 11:50
 -- Serverversion: 10.1.38-MariaDB
 -- PHP-version: 7.3.2
 
@@ -39,7 +39,9 @@ CREATE TABLE `grupper` (
 
 INSERT INTO `grupper` (`GruppID`, `GruppNamn`) VALUES
 (1, 'IF Metal'),
-(2, 'Rocka Sock');
+(2, 'Rocka Sock'),
+(3, 'From Software'),
+(4, 'Placeholder Studios');
 
 -- --------------------------------------------------------
 
@@ -72,16 +74,22 @@ INSERT INTO `kategori` (`FragaID`, `Fraga`) VALUES
 
 CREATE TABLE `person` (
   `ID` int(11) NOT NULL,
-  `Namn` varchar(100) COLLATE utf32_swedish_ci NOT NULL
+  `Namn` varchar(100) COLLATE utf32_swedish_ci NOT NULL,
+  `Password` varchar(100) COLLATE utf32_swedish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_swedish_ci;
 
 --
 -- Dumpning av Data i tabell `person`
 --
 
-INSERT INTO `person` (`ID`, `Namn`) VALUES
-(1, 'Jessica'),
-(2, 'GW');
+INSERT INTO `person` (`ID`, `Namn`, `Password`) VALUES
+(0, 'Root', ''),
+(1, 'Jessica', '123'),
+(2, 'GW', '321'),
+(3, 'Stefan', '1337'),
+(4, 'Anton', 'EldenRing'),
+(5, 'Mattias', 'D3g1oo00P#'),
+(6, 'Pelle', 'Kalle');
 
 -- --------------------------------------------------------
 
@@ -107,7 +115,14 @@ INSERT INTO `resulutat` (`GruppID`, `FrageID`, `PersonID`, `Svar`) VALUES
 (1, 2, 2, 8),
 (1, 3, 2, 10),
 (1, 4, 2, 1),
-(1, 5, 2, 10);
+(1, 5, 2, 10),
+(2, 4, 1, 10),
+(2, 4, 5, 1),
+(2, 4, 3, 5),
+(2, 1, 3, 10),
+(2, 2, 3, 8),
+(2, 3, 3, 3),
+(2, 5, 3, 1);
 
 --
 -- Index för dumpade tabeller
@@ -139,7 +154,7 @@ ALTER TABLE `person`
 -- AUTO_INCREMENT för tabell `grupper`
 --
 ALTER TABLE `grupper`
-  MODIFY `GruppID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `GruppID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT för tabell `kategori`
@@ -151,7 +166,7 @@ ALTER TABLE `kategori`
 -- AUTO_INCREMENT för tabell `person`
 --
 ALTER TABLE `person`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
