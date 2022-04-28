@@ -4,38 +4,47 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Inlogg</title>
 </head>
 <body>
     <?php
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        //$username = "ntigskov_goa1;
-        //$password = "iH_n-SnWtCy";
-        $dbname = "gameon";
+        session_start();
+        $Name = "";
+        $NameErr = false;
+        $Password = "";
+        $PasswordErr = false;
 
-        // Creat Connection
-        $conn = new mysqli($servername, $username, $password, $dbname);
-        $anv = $_GET['Namn'];
-        $pass = $_GET['Password'];
-
+        if(isset($_POST['Namn']) && isset($_POST['Password'])){
+        require_once('db.php');
+        
+        $anv = $_POST['Namn'];
+        $pass = $_POST['Password'];
+        
         $sql = "SELECT * FROM person WHERE Namn='$anv' and Password='$pass'";
         $result = $conn->query($sql);
+        $print = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        print_r($print);
 
-        if ($result->num_rows > 0) {
+        // Initiera variabler och ställ in på tomma strängar
+        $_SESSION["Namn"] = $Name;
+        $_SESSION["Password"] = $Password;
+        $NameErr = $PasswordErr = "";
 
-            //Output rows as long as they exists
-            while ($row = $result->fetch_assoc()) {
-                echo $row['Namn'] . ' ' . $row['Password'] . '<br>';
-            }
+        if ($result->num_rows<1) {
+            header("location: test.php");
         }
-        else
-        echo "hacksdnfjadk";
-        
-        $conn->close();
-        /*if($anv=Jessica and $pass=123);
-            echo "Hej";*/
+        else{
+            while($row = $result->fetch_assoc()){
+                $id = $row['ID'];
+            }
+            header("location: glob.php");
+        }
+    }
     ?>
+        <form method="post">
+        Namn: <input required type="text" name="Namn" placeholder="Namn" value="<?php echo $Name; ?>"><span class="error"> <?php echo $NameErr; ?></span><br><br>
+        Lösenord: <input required type="text" name="Password" placeholder="Lösenord" value="<?php echo $Password; ?>"><span class="error"> <?php echo $PasswordErr; ?></span><br><br>
+        <input type="submit">
+        </form>
 </body>
 </html>
