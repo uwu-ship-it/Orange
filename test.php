@@ -1,4 +1,5 @@
 <?php
+    session_start();
     $servername = "localhost";
         $username = "root";
         $password = "";
@@ -6,21 +7,23 @@
 
         // Create Connection
         $conn = new mysqli($servername, $username, $password, $dbname);
-        $anv = $_GET['Namn'];
-        $pass = $_GET['Pass'];
+        $anv = $_SESSION['Namn'];
+        $pass = $_SESSION['Password'];
 
         $sql = "SELECT * FROM person WHERE Namn='$anv' and Password='$pass'";
         $result = $conn->query($sql);
-    
+        
         if ($result->num_rows > 0) {
-
+            
             //Output rows as long as they exists
             while ($row = $result->fetch_assoc()) {
-                $id = $row['ID'];
+                $_SESSION['id'] = $row['ID'];
             }
         }
-        else
-        echo "Det finns ingen data";
+        else{
+            echo "Det finns ingen data";
+        }
+        
 ?>
 <!DOCTYPE html>
 <html lang="en">
