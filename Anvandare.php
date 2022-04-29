@@ -40,6 +40,7 @@
             }
             $_SESSION['id'] = $id;
             header("location: test.php");
+
         }
     }
     ?>
