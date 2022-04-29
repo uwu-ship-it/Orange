@@ -26,18 +26,21 @@
         print_r($print);
 
         // Initiera variabler och ställ in på tomma strängar
-        $_SESSION["Namn"] = $Name;
-        $_SESSION["Password"] = $Password;
+        $_SESSION["Namn"] = $anv;
+        $_SESSION["Password"] = $pass;
         $NameErr = $PasswordErr = "";
-
+        
         if ($result->num_rows<1) {
-            header("location: test.php");
+            header("location: Anvandare.php");
         }
         else{
+            
             while($row = $result->fetch_assoc()){
                 $id = $row['ID'];
             }
-            header("location: glob.php");
+            $_SESSION['id'] = $id;
+            header("location: test.php");
+
         }
     }
     ?>
