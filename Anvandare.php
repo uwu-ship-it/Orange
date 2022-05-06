@@ -30,16 +30,27 @@
         $_SESSION["Password"] = $pass;
         $NameErr = $PasswordErr = "";
         
-        if ($result->num_rows<1) {
+        if ($result->num_rows!=1) {
             header("location: Anvandare.php");
         }
         else{
             
-            while($row = $result->fetch_assoc()){
-                $id = $row['ID'];
-            }
+            $sql = "SELECT * FROM person WHERE Namn=? and Password=?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("ss",$anv, $pass);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+            $id = $row['ID'];
+            
             $_SESSION['id'] = $id;
-            header("location: test.php");
+            print_r($id);
+            if (intval($id) == 0){
+                header("location: hej.php");
+            }
+            else{
+                header("location: slider.php");
+            }
 
         }
     }
