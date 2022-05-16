@@ -31,7 +31,7 @@
         $NameErr = $PasswordErr = "";
         
         if ($result->num_rows!=1) {
-            header("location: Anvandare.php");
+            header("location: LoggaIn.php");
         }
         else{
             
@@ -46,10 +46,10 @@
             $_SESSION['id'] = $id;
             print_r($id);
             if (intval($id) == 0){
-                header("location: hej.php");
+                header("location: admin.php");
             }
             else{
-                header("location: slider.php");
+                header("location: anvandarsidan.php");
             }
 
         }
@@ -57,7 +57,7 @@
     ?>
         <form method="post">
         Namn: <input required type="text" name="Namn" placeholder="Namn" value="<?php echo $Name; ?>"><span class="error"> <?php echo $NameErr; ?></span><br><br>
-        Lösenord: <input required type="text" name="Password" placeholder="Lösenord" value="<?php echo $Password; ?>"><span class="error"> <?php echo $PasswordErr; ?></span><br><br>
+        Lösenord: <input required type="password" name="Password" placeholder="Lösenord" value="<?php echo $Password; ?>"><span class="error"> <?php echo $PasswordErr; ?></span><br><br>
         <input type="submit">
         </form>
 </body>
